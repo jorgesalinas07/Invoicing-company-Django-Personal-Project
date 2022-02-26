@@ -25,10 +25,28 @@ class Bill(models.Model):
         """Return company name"""
         return self.company_name
 
-class Bill_Product(models.Model):
-    """ Model for the conection between bill and product """
-    bill_id = models.ForeignKey('Bill', on_delete=models.CASCADE,null=True, blank=True)
-    product_id = models.ForeignKey('Product', on_delete=models.CASCADE,null=True, blank=True)
-    # def __str__(self):
-    #     """Return bill_id"""
-    #     return self.bill_id
+# >>> bill = Bill.objects.create(company_name='HTS', nit=12564, code=31664)
+# >>> bill.save()
+# >>> Product.objects.all()
+# <QuerySet [<Product: Tamesis>, <Product: Coca cola>, <Product: Pan>]>
+# >>> Product.objects.get(pk=1)
+# <Product: Tamesis>
+
+# >>> bill.product.add(1,2)
+
+# >>> bill.product.al()
+# Traceback (most recent call last):
+#   File "<console>", line 1, in <module>
+# AttributeError: 'ManyRelatedManager' object has no attribute 'al'
+# >>> bill.product.all()
+# <QuerySet [<Product: Tamesis>, <Product: Coca cola>]>
+# >>> Product.objects.all()
+# <QuerySet [<Product: Tamesis>, <Product: Coca cola>, <Product: Pan>]>
+# >>> q=Product.objects.all()
+# >>> q.name
+# Traceback (most recent call last):
+#   File "<console>", line 1, in <module>
+# AttributeError: 'QuerySet' object has no attribute 'name'
+# >>> q=Product.objects.all()
+# >>> q.get(pk=1).name
+# 'Tamesis'
