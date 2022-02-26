@@ -34,10 +34,6 @@ class Bill(models.Model):
 
 # >>> bill.product.add(1,2)
 
-# >>> bill.product.al()
-# Traceback (most recent call last):
-#   File "<console>", line 1, in <module>
-# AttributeError: 'ManyRelatedManager' object has no attribute 'al'
 # >>> bill.product.all()
 # <QuerySet [<Product: Tamesis>, <Product: Coca cola>]>
 # >>> Product.objects.all()
