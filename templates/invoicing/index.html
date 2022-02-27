@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bills list</title>
+</head>
+<body>
+
+    <header>
+        <h1> Invoice list </h1>
+    </header>
+
+    <main>
+
+        <div class = 'row'>
+            <h3> <strong>Client #{{ pk }} </strong> </h3>
+            <h3> Welcome {{first_name}} {{last_name}}</h3>
+            {% if document %}
+                <h3> Your id is: {{document}} </h3>
+            {% endif %}
+            <h3> Your invoices are:  </h3>
+
+        </div>
+
+        <div class="row">
+            {% for bill, bill_id in invoices %}
+
+                <div class="col-sm-12 col-md-8 offset-md-2 mt-5 p-0 post-container">
+                    <p> Invoice # <a href="{% url 'invoicing:detail' bill_id pk bill %}"> {{ bill }} </a>  </p>
+                
+                </div>
+
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer>
+        <p> Would you like to create a new invoice? <a href="{% url 'invoicing:create' pk %}"> Create here. </a></p>
+        <p> Did you finish? <a href="{% url 'users:logout' %}"> Logout. </a> </p>
+    </footer>
+</body>
+</html>

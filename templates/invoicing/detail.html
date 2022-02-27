@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+</head>
+<body>
+    <header> Invoice N {{invoice_index}} </header>
+
+    <p> The invoice company name is {{company_name}} </p>
+    <p> The invoice company nit is {{nit}} </p>
+    <p> The invoice code is {{code}} </p>
+    <p> The products of the invoice are: </p>
+    {% for product in products %}
+        <p> {{product.name}} </p>
+        <p> {{product.decription}} </p>
+        </br>
+    {% endfor %}
+
+    <footer>
+        <p> Would you like to edit this invoice? <a href="{% url 'invoicing:update' invoice_id client_id %}"> Change here. </a> </p>
+        <p> Would you like to delete this invoice? </p>
+        <p> Did you finish? <a href="{% url 'users:logout' %}"> Logout. </a> </p>
+        <p> Would you like to go the menu? <a href="{% url 'invoicing:ListBillView' client_id %}"> Click here. </a> 
+    </footer>
+
+</body>
+</html>

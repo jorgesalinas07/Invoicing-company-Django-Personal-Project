@@ -7,12 +7,25 @@ app_name = 'invoicing'
 
 urlpatterns = [
         path(
-        route = '<int:pk>/create',
+        route = '<int:client_id>/create',
         view = views.createbillview,
-        name='create',),
+        name='create',
+        ),
 
         path(
-        route='list/<int:pk>',
-        view = views.list_bill_view,
-        name='ListBillView',)
+                route='list/<int:client_id>',
+                view = views.list_bill_view,
+                name='ListBillView',
+        ),
+        
+        path(
+                route='<int:invoice_id>/<int:client_id>/<int:invoice_index>/detail/',
+                view = views.billDetailView,
+                name = 'detail',
+        ),
+        path(
+                route = '<int:invoice_id>/<int:client_id>/update',
+                view  = views.updatebillView,
+                name = 'update',
+        ),
 ]
