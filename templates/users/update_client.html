@@ -2,28 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update bill</title>
+    <title>Update Client</title>
 </head>
 <body>
 
     <header>
-
+        <h1> Update client </h1>
     </header>
 
     <main>
-        <form method="POST">
+        <form method="post">
             {% csrf_token %}
-
             {{ form.as_p }}
-            
-            <button class="btn btn-primary btn-block mt-5" type="submit">Update</button>
-
+            <input type="submit" value="Update">
         </form>
     </main>
 
     <footer>
 
     </footer>
-
+    
 </body>
 </html>

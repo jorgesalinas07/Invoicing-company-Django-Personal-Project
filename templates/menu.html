@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+</head>
+<body>
+
+    <header>
+        <h1> MAIN MENU </h1>
+    </header>
+
+    <main>
+        <h3> What would you like to do? </h3>
+        <p> Would you like to look at invoices? <a href="{% url 'invoicing:ListBillView' client_id %}"> Click here. </a> </p>
+        <p> Would you like to delete this client? <a href="{% url 'users:delete' client_id %}"> Delete here. </a> </p>
+        <p> Would you like to update this client? <a href="{% url 'users:update' client_id %}"> Update here. </a> </p>
+        <p> Would you like to look at this client information? <a href="{% url 'users:detail' client_id %}"> Click here. </a> </p>
+        <p> Did you finish? <a href="{% url 'users:logout' %}"> Logout. </a> </p> 
+    </main>
+
+    <footer>
+
+    </footer>
+</body>
+</html>

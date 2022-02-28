@@ -1,9 +1,12 @@
+#Django
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
 class ClientTest(TestCase):
+    """ Tests for the client model"""
 
     def test_new_superuser(self):
+        """ Test new superuser is created correctly """
         db = get_user_model()
         super_user = db.objects.create_superuser(
             'test@super.com', 'test', 'test2', 'holamundo', '1065923143', 
@@ -18,6 +21,7 @@ class ClientTest(TestCase):
         self.assertEqual(str(super_user), 'test')
     
     def test_new_user(self):
+        """  Test new user is created correctly  """
         db = get_user_model()
         user = db.objects.create_user(
             'test@super.com', 'test', 'test2', 'holamundo', '1065923143', 

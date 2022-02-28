@@ -21,7 +21,6 @@
                 {{error}}
             </p>
         {% endif %}
-1
             
         <form method = 'POST' action='{% url 'users:login' %}'>
             
@@ -30,9 +29,11 @@
             <div class = 'form-group'>
                 <input class = 'form-control' type = 'text' placeholder = 'email' name = 'email'/>
             </div>
+
             <div class = 'form-group'>
                 <input class = 'form-control' type = 'password' placeholder = 'password' name = 'password'/>
             </div>
+
             <button class = 'btn btn-primary btn-block mt-5' type= 'submit'> Sign in! </button>
         </form>
 
@@ -41,5 +42,6 @@
     <footer>
         <p class= 'mt-4'> Don't have an account yet? <a href="{% url 'users:signup' %}"> Sign up here. </a> </p>
     </footer>
+    
 </body>
 </html>

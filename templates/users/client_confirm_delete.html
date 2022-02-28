@@ -1,0 +1,29 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel = 'stylesheet' href="{% static 'reset.css' %}">
+    <link rel = 'stylesheet' href="{% static 'login.css' %}">
+    <title>Delete client</title>
+</head>
+<body>
+
+    <header>
+
+    </header>
+
+    <main>
+        <form method="post">{% csrf_token %}
+            <p>Are you sure you want to delete the client "{{ object }}"?</p>
+            <input type="submit" value="Confirm">
+        </form>
+    </main>
+
+    <footer>
+        
+    </footer>
+
+</body>
+</html>

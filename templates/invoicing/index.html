@@ -14,7 +14,7 @@
 
         <div class = 'row'>
             <h3> <strong>Client #{{ pk }} </strong> </h3>
-            <h3> Welcome {{first_name}} {{last_name}}</h3>
+            <h3> Welcome {{first_name|title}} {{last_name|title}}</h3>
             {% if document %}
                 <h3> Your id is: {{document}} </h3>
             {% endif %}

@@ -1,6 +1,8 @@
+#Django
 from django import views
 from django.urls import path
 
+#Local
 from . import views
 
 app_name = 'invoicing'
@@ -27,5 +29,10 @@ urlpatterns = [
                 route = '<int:invoice_id>/<int:client_id>/update',
                 view  = views.updatebillView,
                 name = 'update',
+        ),
+        path(
+                route = 'delete/<int:pk>',
+                view  = views.DeleteInvoice.as_view(),
+                name = 'delete',
         ),
 ]

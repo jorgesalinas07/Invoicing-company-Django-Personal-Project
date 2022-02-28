@@ -1,4 +1,7 @@
+#Django
 from django.contrib import admin
+
+#Local
 from .models import Bill, Product
 
 @admin.register(Bill)
@@ -9,6 +12,7 @@ class BillAdmin(admin.ModelAdmin):
     list_editable = ( 'company_name', 'nit', 'code',)
     search_fields = ('company_name', 'nit',)
     list_filter = ('nit', 'company_name',)
+
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):

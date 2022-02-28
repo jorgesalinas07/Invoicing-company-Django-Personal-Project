@@ -1,12 +1,14 @@
-
+#Django
 from django.urls import path
+
+#Local
 from . import views
 
 app_name = 'users'
 
 urlpatterns = [
     path(
-        route='login/',
+        route='',
         view=views.login_view,
         name = "login"
     ),
@@ -21,13 +23,23 @@ urlpatterns = [
         name = "signup"
     ),
     path(
-        route='profile/<str:username>/',
-        view=views.UserDetailView.as_view(),
+        route='profile/<int:pk>/',
+        view=views.ClientDetailView.as_view(),
         name = "detail"
     ),
     path(
-        route='me/profile/',
+        route='update/<str:pk>/',
         view=views.UpdateProfileView.as_view(),
-        name = "update_profile"
+        name = "update"
+    ),
+        path(
+        route='menu/<int:client_id>',
+        view=views.menu,
+        name = "menu"
+    ),
+    path(
+        route='delete/<int:pk>',
+        view=views.DeleteClientView.as_view(),
+        name = 'delete'
     ),
 ]

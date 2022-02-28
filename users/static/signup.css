@@ -1,0 +1,7 @@
+form, header{
+    /* Color especial */
+    background: linear-gradient(
+        to right,
+    );
+    text-align: center;
+}

@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel = 'stylesheet' href="{% static 'reset.css' %}">
+    <link rel = 'stylesheet' href="{% static 'login.css' %}">
+    <title>Client detail</title>
+</head>
+<body>
+
+    <header>
+        <h1>Client information </h1>
+    </header>
+
+    <main>
+        </br>
+            <h1> Client {{ client.first_name|title }} {{ client.last_name|title }} </h1>
+        </br>
+            <p>Your email is: {{ client.email }}</p>
+        </br>
+            <p>Your document is: {{ client.document }}</p>
+
+        </br>
+            <p> You have {{bill_quantity}} bills </p>
+        </br>
+    </main>
+
+    <footer>
+        <p> Would you like to go back to the menu? <a href="{% url 'users:menu' client_id %}"> Click here. </a>
+        <p> Did you finish? <a href="{% url 'users:logout' %}"> Logout. </a> </p> 
+    </footer>
+    
+</body>
+</html>

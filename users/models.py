@@ -51,4 +51,5 @@ class Client(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         """Return First name"""
+        
         return self.first_name

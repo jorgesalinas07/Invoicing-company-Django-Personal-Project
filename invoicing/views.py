@@ -1,9 +1,9 @@
 #Django
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
 from .models import Bill
-from django.views.generic import CreateView, UpdateView, ListView, DetailView, DeleteView
+from django.views.generic import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 #Locales
@@ -11,7 +11,10 @@ from .forms import BillForm
 from .models import Bill, Product
 from users.models import Client
 
+
+@login_required
 def createbillview(request, client_id):
+    """ Create a new bill """
 
     if request.method=='POST':
         form = BillForm(request.POST)
@@ -22,22 +25,11 @@ def createbillview(request, client_id):
                                 nit = request.POST['nit'],
                                 code = request.POST['code'],
                                 )
-            
-            registred_products= Product.objects.all()
-            
+            product1 = Product.objects.create(name = request.POST['name_product1'], description = request.POST['description_product1'])
+            product2 = Product.objects.create(name = request.POST['name_product2'], description = request.POST['description_product2'])
+            product3 = Product.objects.create(name = request.POST['name_product3'], description = request.POST['description_product3'])
             new_bill = Bill.objects.get(nit=request.POST['nit'])
-            form_products = {request.POST['name_product1']:request.POST['description_product1'],
-                             request.POST['name_product2']:request.POST['description_product2'],
-                             request.POST['name_product3']:request.POST['description_product3']}
-            for name, description in form_products.items():
-                added = False
-                for registred_product in registred_products:
-                    if registred_product.name == name:
-                        new_bill.product.add(Product.objects.get(name = registred_product.name))
-                        added=True
-                if added==False:
-                    Product.objects.create(name = name, description = description)
-                    new_bill.product.add(Product.objects.get(name = name))
+            new_bill.product.add(product1, product2, product3)
             
             return redirect('invoicing:ListBillView', client_id=client_id)
         else:
@@ -55,23 +47,55 @@ def createbillview(request, client_id):
 
 @login_required
 def updatebillView(request, invoice_id, client_id):
+    """Update a bill"""
+
     form = BillForm(request.POST)
-    if request.method == 'POST' and form.is_valid():
-        data = form.cleaned_data
-        client = Client.objects.get(pk=client_id)
-        bill = client.bill_set.all().get(pk=invoice_id)
-        bill.company_name = data['company_name']
-        bill.nit = data['nit']
-        bill.code = data['code']
-        #product_exitance(data['name_product1'])
-        return render(request, 'invoicing/update.html',{'form':form})
+    if request.method == 'POST':
+        if form.is_valid():
+            data = form.cleaned_data
+            client = Client.objects.get(pk=client_id)
+            bill = client.bill_set.all().get(pk=invoice_id)
+            bill.company_name = data['company_name']
+            bill.nit = data['nit']
+            bill.code = data['code']
+            for index, product in enumerate(bill.product.all(),1):
+                if index == 1:
+                    product1 = Product.objects.get(pk = product.id)
+                    product1.name = data['name_product1']
+                    product1.description = data['description_product1']
+                if index == 2:
+                    product2 = Product.objects.get(pk = product.id)
+                    product2.name = data['name_product2']
+                    product2.description = data['description_product2']
+                if index == 3:
+                    product3 = Product.objects.get(pk = product.id)
+                    product3.name = data['name_product3']
+                    product3.description = data['description_product3']
+            bill.save()
+            product1.save()
+            product2.save()
+            product3.save()
+            return redirect('invoicing:ListBillView', client_id=client_id)
+        else:
+            return render(request, 'invoicing/update.html',{
+                                                           'form':form,
+                                                            'error_mensage': 'Here goes the error mesage'
+                                                           })
     else:
         return render(request, 'invoicing/update.html',{'form':form})
-        
-        
+
+
+class DeleteInvoice(DeleteView,LoginRequiredMixin):
+    """ Delete a bill """
+
+    model = Bill
+    success_url = reverse_lazy('users:login')
+
 
 @login_required
 def list_bill_view(request,client_id):
+    """ List all bills """
+
     query = Client.objects.get(pk=client_id)
     invoices_ids = []
     for id in query.bill_set.all():
@@ -86,6 +110,7 @@ def list_bill_view(request,client_id):
                 'document': query.document,
                 'pk': query.pk,
                 })
+
 
 @login_required
 def billDetailView(request, invoice_id, client_id, invoice_index):
@@ -103,20 +128,4 @@ def billDetailView(request, invoice_id, client_id, invoice_index):
                                 'invoice_index': invoice_index
                                 })
 
-class DeleteBillView(LoginRequiredMixin, DeleteView):
-    pass
 
-
-def product_exitance(product_name):
-    """ """
-    existance = False
-
-    for bill in Bill.objects.all():
-
-        for product in bill.product.all():
-
-            if product.name == product_name:
-                existance = True
-                break
-    
-    return existance
