@@ -16,6 +16,8 @@
         <p> Would you like to delete this client? <a href="{% url 'users:delete' client_id %}"> Delete here. </a> </p>
         <p> Would you like to update this client? <a href="{% url 'users:update' client_id %}"> Update here. </a> </p>
         <p> Would you like to look at this client information? <a href="{% url 'users:detail' client_id %}"> Click here. </a> </p>
+        <p> Would you like to download all clients information? <a href="{% url 'users:download'%}"> Download. </a> </p>
+        <p> Would you like to import a CSV file with clients information? <a href="{% url 'users:import'%}"> Import. </a> </p>
         <p> Did you finish? <a href="{% url 'users:logout' %}"> Logout. </a> </p> 
     </main>
 

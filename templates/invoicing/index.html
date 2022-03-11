@@ -36,6 +36,7 @@
 
     <footer>
         <p> Would you like to create a new invoice? <a href="{% url 'invoicing:create' pk %}"> Create here. </a></p>
+        <p> Would you like to go the main menu? <a href="{% url 'users:menu' client_id %}"> Click here. </a>
         <p> Did you finish? <a href="{% url 'users:logout' %}"> Logout. </a> </p>
     </footer>
 </body>

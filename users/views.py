@@ -1,7 +1,11 @@
+#Python
+import csv
+
 #Django
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views.generic import FormView, UpdateView, DetailView, DeleteView
 from django.urls.base import reverse_lazy
@@ -103,3 +107,49 @@ def menu(request, client_id):
     """ Main menu with all options for client """
 
     return render(request, 'menu.html', {'client_id':client_id})
+
+
+@login_required
+def downloadfile(request):
+    """ Download a file with all clients information """
+
+    response = HttpResponse(content_type = 'text/csv')
+    writer = csv.writer(response)
+    writer.writerow(['first_name','last_name', 'document', 'Bill_quantity'])
+
+    bill_quantity = []
+    for client in Client.objects.all():
+        bill_quantity.append(len(client.bill_set.all()))
+    main_values = Client.objects.all().values_list('first_name','last_name', 'document')
+    present_values = []
+    for value, quantity in zip(main_values,bill_quantity):
+        present_values.append(value+(quantity,))
+
+    for client in present_values:
+        writer.writerow(client)
+    
+    response['Content-Disposition'] = ' attachment; filename ="clients.csv" '
+
+    return response
+
+
+def importfile(request):
+    pass
+    clients = []
+    with open('clients.csv', 'r') as imported_clients:
+        data = list(csv.reader(imported_clients, delimiter=','))
+        
+        for row in data[1:]:
+            clients.append(
+               Client(
+                   first_name =     row[0],
+                   last_name =      row[1],
+                   email =          row[2],
+                   document =       row[3],
+                   password =       row[4],
+               ) 
+            )
+    if len(clients)>0:
+        Client.objects.bulk_create(clients)
+    
+    return HttpResponse('Successfully imported')

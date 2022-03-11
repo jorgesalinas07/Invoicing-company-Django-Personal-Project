@@ -42,4 +42,14 @@ urlpatterns = [
         view=views.DeleteClientView.as_view(),
         name = 'delete'
     ),
+    path(
+        route='download/',
+        view = views.downloadfile,
+        name = 'download'
+    ),
+    path(
+        route='import/',
+        view = views.importfile,
+        name = 'import'
+    )
 ]

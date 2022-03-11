@@ -109,6 +109,7 @@ def list_bill_view(request,client_id):
                 'last_name': query.last_name,
                 'document': query.document,
                 'pk': query.pk,
+                'client_id': client_id
                 })
 
 
